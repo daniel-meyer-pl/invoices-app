@@ -19,48 +19,49 @@ model User {
   nip             String?
   createdAt       DateTime  @default(now())
 
-  invoices        Invoice[] // relacja 1:N do Invoice
+  invoices        Invoice[]
 }
 
 model Customer {
-  id        String    @id @default(uuid())
-  firstname String?
-  lastname  String?
+  id          String    @id @default(uuid())
+  firstname   String?
+  lastname    String?
   companyName String?
-  address   String?
-  nip       String?
-  createdAt DateTime  @default(now())
+  address     String?
+  nip         String?
+  createdAt   DateTime  @default(now())
 
-  invoices  Invoice[] // relacja 1:N do Invoice
+  invoices    Invoice[]
 }
 
 model Invoice {
-  id             String        @id @default(uuid())
-  userId         String
-  customerId     String
-  invoiceNumber  String        @unique
-  paidStatus     Boolean       @default(false)
-  paidDate       DateTime?
-  priceNetto     Decimal
-  priceGross     Decimal
-  currencyCode   String        @default("PLN")
-  createdAt      DateTime      @default(now())
+  id              String        @id @default(uuid())
+  userId          String
+  customerId      String
+  invoiceNumber   String        @unique
+  paidStatus      Boolean       @default(false)
+  paidDate        DateTime?
+  priceNetto      Decimal
+  priceGross      Decimal
+  currencyCode    String        @default("PLN")
+  createdAt       DateTime      @default(now())
   paymentDeadline DateTime
+  paymentType     String        @default("transfer")
 
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  customer       Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  items          InvoiceItem[] // relacja 1:N do InvoiceItem
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customer        Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  items           InvoiceItem[]
 }
 
 model InvoiceItem {
-  id           String   @id @default(uuid())
-  invoiceId    String
-  productName  String
-  amount       Decimal
-  unit         String
-  priceNetto   Decimal
-  priceGross   Decimal
-  tax          Int
+  id          String   @id @default(uuid())
+  invoiceId   String
+  productName String
+  amount      Decimal
+  unit        String
+  priceNetto  Decimal
+  priceGross  Decimal
+  tax         Int
 
-  invoice      Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
 }
