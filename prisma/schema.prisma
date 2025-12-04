@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  fullname        String?
+  avatar          String?
+  googleAccountId String?   @unique
+  companyName     String?
+  bankAccount     String?
+  address         String?
+  nip             String?
+  createdAt       DateTime  @default(now())
+
+  invoices        Invoice[] // relacja 1:N do Invoice
+}
+
+model Customer {
+  id        String    @id @default(uuid())
+  firstname String?
+  lastname  String?
+  companyName String?
+  address   String?
+  nip       String?
+  createdAt DateTime  @default(now())
+
+  invoices  Invoice[] // relacja 1:N do Invoice
+}
+
+model Invoice {
+  id             String        @id @default(uuid())
+  userId         String
+  customerId     String
+  invoiceNumber  String        @unique
+  paidStatus     Boolean       @default(false)
+  paidDate       DateTime?
+  priceNetto     Decimal
+  priceGross     Decimal
+  currencyCode   String        @default("PLN")
+  createdAt      DateTime      @default(now())
+  paymentDeadline DateTime
+
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customer       Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  items          InvoiceItem[] // relacja 1:N do InvoiceItem
+}
+
+model InvoiceItem {
+  id           String   @id @default(uuid())
+  invoiceId    String
+  productName  String
+  amount       Decimal
+  unit         String
+  priceNetto   Decimal
+  priceGross   Decimal
+  tax          Int
+
+  invoice      Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}

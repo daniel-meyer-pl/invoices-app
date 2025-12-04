@@ -1,0 +1,40 @@
+services:
+  db:
+    container_name: db
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: invoices
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d invoices"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    container_name: app
+    image: node:22
+    environment:
+      NODE_ENV: development
+      APP_ENV: development
+      API_URL: "http://localhost/"
+      DEV_PORT: 3000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    working_dir: /usr/src/app
+    command: ['bash', './scripts/post-deploy.sh']
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "24678:24678"
+      - "5173:5173"
+      - "80:3000"
+      - "3000:80"
