@@ -10,6 +10,8 @@ export type PublicUser = {
 }
 
 export type InsertUserData = Pick<PublicUser, 'email' | 'fullname' | 'avatar'>
+export type UpdateUserData = Omit<PublicUser, 'id'>
+export type PatchUserData = Partial<UpdateUserData>
 
 export type UserApiResponse = {
   user?: PublicUser

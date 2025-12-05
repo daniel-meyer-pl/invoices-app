@@ -20,12 +20,15 @@ model User {
   createdAt         DateTime  @default(now()) @map("created_at")
 
   invoices          Invoice[]
+  customers         Customer[]   // new relation: user has many customers
 
   @@map("users")
 }
 
 model Customer {
   id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   firstname   String?
   lastname    String?
   companyName String? @map("company_name")

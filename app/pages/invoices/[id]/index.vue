@@ -11,16 +11,29 @@ definePageMeta({
   },
 })
 
-const { id } = useRoute().params
+import { useRoute, useRouter } from '#imports'
+import { useUiStore } from '../../../stores/ui'
+import InvoiceEditForm from '../../../components/InvoiceEditForm.vue'
 
-const { data, error } = await useAsyncData(`user:${id}`, () => {
-  return {} //myGetFunction('users', { id })
-})
+const route = useRoute()
+const router = useRouter()
+const ui = useUiStore()
+const id = String(route.params.id || '')
 
+function onSaved(invoiceId: string) {
+  ui.setMessage('Invoice saved')
+  router.push('/')
+}
+
+function onCancel() {
+  router.back()
+}
 </script>
 
 <template>
-  <h1>#{{ $route.params.id }}</h1>
+  <div class="container mx-auto p-4 max-w-4xl">
+    <InvoiceEditForm :invoiceId="id" @saved="onSaved" @cancel="onCancel" />
+  </div>
 </template>
 
 <style>
