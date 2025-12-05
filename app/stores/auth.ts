@@ -7,7 +7,6 @@ export const useAuthStore = defineStore("auth", () => {
   const isLoggedIn = ref<Boolean | null>(null)
 
   async function init() {
-    console.log("Auth store init")
     if (isLoggedIn.value !== null) return
     try {
       const res = await $fetch<UserApiResponse>("/api/auth/me", {
@@ -15,10 +14,8 @@ export const useAuthStore = defineStore("auth", () => {
       })
       isLoggedIn.value = res.loggedIn
       user.value = res.user || null
-      console.log("res", res.user)
 
     } catch (e) {
-      console.log(e)
       isLoggedIn.value = false
       user.value = null
     }
