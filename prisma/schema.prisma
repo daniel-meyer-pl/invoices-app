@@ -8,60 +8,68 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(uuid())
-  email           String    @unique
-  fullname        String?
-  avatar          String?
-  googleAccountId String?   @unique
-  companyName     String?
-  bankAccount     String?
-  address         String?
-  nip             String?
-  createdAt       DateTime  @default(now())
+  id                String    @id @default(uuid())
+  email             String    @unique
+  fullname          String?
+  avatar            String?
+  googleAccountId   String  @unique @map("google_account_id")
+  companyName       String? @map("company_name")
+  bankAccountNumber String? @map("bank_account_number")
+  address           String?
+  nip               String?
+  createdAt         DateTime  @default(now()) @map("created_at")
 
-  invoices        Invoice[]
+  invoices          Invoice[]
+
+  @@map("users")
 }
 
 model Customer {
   id          String    @id @default(uuid())
   firstname   String?
   lastname    String?
-  companyName String?
+  companyName String? @map("company_name")
   address     String?
   nip         String?
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime  @default(now()) @map("created_at")
 
   invoices    Invoice[]
+
+  @@map("customers")
 }
 
 model Invoice {
   id              String        @id @default(uuid())
-  userId          String
-  customerId      String
-  invoiceNumber   String        @unique
-  paidStatus      Boolean       @default(false)
-  paidDate        DateTime?
-  priceNetto      Decimal
-  priceGross      Decimal
-  currencyCode    String        @default("PLN")
-  createdAt       DateTime      @default(now())
-  paymentDeadline DateTime
-  paymentType     String        @default("transfer")
+  userId          String        @map("user_id") 
+  customerId      String        @map("customer_id")
+  invoiceNumber   String        @unique @map("invoice_number")
+  paidStatus      Boolean       @default(false) @map("paid_status") 
+  paidDate        DateTime?     @map("paid_date") 
+  priceNetto      Decimal       @map("price_netto")
+  priceGross      Decimal       @map("price_gross")
+  currencyCode    String        @default("PLN") @map("currency_code")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  paymentDeadline DateTime      @map("payment_deadline")
+  paymentType     String        @default("transfer") @map("payment_type")
 
   user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   customer        Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
   items           InvoiceItem[]
+
+  @@map("invoices")
 }
 
 model InvoiceItem {
   id          String   @id @default(uuid())
-  invoiceId   String
-  productName String
+  invoiceId   String @map("invoice_id")
+  productName String @map("product_name")
   amount      Decimal
   unit        String
-  priceNetto  Decimal
-  priceGross  Decimal
+  priceNetto  Decimal @map("price_netto")
+  priceGross  Decimal @map("price_gross")
   tax         Int
 
   invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("invoice_items")
 }
