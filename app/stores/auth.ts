@@ -1,37 +1,36 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
-
-interface User {
-  id: string
-  email: string
-  name: string
-}
+import type { PublicUser, UserApiResponse } from "~~/types/user"
 
 export const useAuthStore = defineStore("auth", () => {
-  const user = ref<User | null>(null)
+  const user = ref<PublicUser | null>(null)
   const isLoggedIn = ref<Boolean | null>(null)
 
   async function init() {
+    console.log("Auth store init")
     if (isLoggedIn.value !== null) return
     try {
-      const res = await $fetch("/api/auth/me", {
+      const res = await $fetch<UserApiResponse>("/api/auth/me", {
         credentials: "include"
       })
       isLoggedIn.value = res.loggedIn
-      if (res.loggedIn) user.value = res.user
+      user.value = res.user || null
+      console.log("res", res.user)
+
     } catch (e) {
+      console.log(e)
       isLoggedIn.value = false
       user.value = null
     }
   }
 
   async function googleLogin(token: string) {
-    const res = await $fetch("/api/auth/google", {
+    const res = await $fetch<UserApiResponse>("/api/auth/google", {
       method: "POST",
       body: { credential: token },
       credentials: "include"
     })
-    user.value = res.user
+    user.value = res.user || null
     isLoggedIn.value = res.loggedIn
     navigateTo("/")
   }

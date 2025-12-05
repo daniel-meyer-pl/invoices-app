@@ -1,9 +1,10 @@
-import { setCookie } from "h3"
 import { signToken } from "../../utils/jwt"
-import { prisma } from "../../utils/prisma"
 import { OAuth2Client } from "google-auth-library"
+import { setAuthCookie } from "../../utils/authCookie"
+import { upsertUserByGoogleAccountId } from "../../repositories/userRepository"
+import type { UserApiResponse } from "~~/types/user"
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<UserApiResponse> => {
   const body = await readBody(event)
   const config = useRuntimeConfig()
   const client = new OAuth2Client(config.public.googleClientId)
@@ -16,20 +17,15 @@ export default defineEventHandler(async (event) => {
   
   const { sub, email, name, picture } = payload
 
-  const user = await prisma.user.upsert({
-    where: { googleAccountId: sub },
-    update: {},
-    create: { googleAccountId: sub, email: email || '', fullname: name, avatar: picture || null }
+  const user = await upsertUserByGoogleAccountId(sub, {
+    email: email || '',
+    fullname: name || null,
+    avatar: picture || null
   })
 
   const token = signToken(user.id)
 
-  setCookie(event, "auth_token", token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/"
-  })
+  setAuthCookie(event, token)
 
   return { user, loggedIn: true }
 })
