@@ -27,7 +27,7 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     working_dir: /usr/src/app
-    command: ['bash', './scripts/post-deploy.sh']
+    command: ['bash', './docker/post-deploy.sh']
     depends_on:
       db:
         condition: service_healthy

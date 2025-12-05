@@ -68,11 +68,11 @@ This will start the full environment, including the backend, frontend, and datab
 invoices-app/
 │
 ├── prisma/              # Prisma schema and migrations
-├── src/                 # Application source code
+├── app/                 # Application source code
 ├── components/          # Reusable UI components
 ├── pages/               # Nuxt pages
 ├── server/              # API routes and logic
-├── docker/              # Docker configuration
+├── docker/              # Docker scripts
 ├── .env.example         # Environment variables template
 └── docker-compose.yml   # Docker services definition
 ```
