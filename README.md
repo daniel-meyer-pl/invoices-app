@@ -1,75 +1,86 @@
-# Nuxt Minimal Starter
+# Invoices App
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A modern web application for managing invoices, clients, and generating PDF invoice documents. The app supports multiple concurrent users, each with their own isolated database of invoices and clients. Authentication is handled using Google OAuth2.
 
-## Setup
+> **Status:** Active development – the project was started recently and is being continuously expanded and improved.
 
-Make sure to install dependencies:
+## 🚀 Tech Stack
 
-```bash
-# npm
-npm install
+**Frontend:**
+- Vue 3
+- Nuxt 4
+- Pinia
+- TailwindCSS
+- Sass
 
-# pnpm
-pnpm install
+**Backend / Server:**
+- Node.js
+- Prisma
+- PostgreSQL
+- Database Migrations
 
-# yarn
-yarn install
+**Infrastructure & Authentication:**
+- Docker Compose
+- Google OAuth2
+- JWT
+- Cookie HttpOnly
 
-# bun
-bun install
-```
+## 📦 Features
 
-## Development Server
+- User authentication via **Google OAuth2**
+- Separate invoice and client databases per user
+- Invoice creation, editing, and management
+- Client management
+- PDF invoice generation
+- Modern and responsive UI
+- Secure session handling using **JWT** and **HTTP Cookies**
 
-Start the development server on `http://localhost:3000`:
+## 🛠️ Getting Started
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
+### 1. Clone the repository
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+git clone https://github.com/daniel-meyer-pl/invoices-app
+cd invoices-app
 ```
 
-Locally preview production build:
+### 2. Create the `.env` file
+
+Copy the example file:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+cp .env.example .env
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Then fill in the required environment variables (OAuth keys, database URL, secrets, etc.).
+
+### 3. Start the project with Docker
+
+```bash
+docker compose up
+```
+
+This will start the full environment, including the backend, frontend, and database.
+
+## 📂 Project Structure (Overview)
+
+```
+invoices-app/
+│
+├── prisma/              # Prisma schema and migrations
+├── src/                 # Application source code
+├── components/          # Reusable UI components
+├── pages/               # Nuxt pages
+├── server/              # API routes and logic
+├── docker/              # Docker configuration
+├── .env.example         # Environment variables template
+└── docker-compose.yml   # Docker services definition
+```
+
+## 📅 Development Notes
+
+The project is still in early development. Additional features, improvements, and refinements will be added over time. Feedback and suggestions are welcome.
+
+## 📧 Contact
+
+If you have any questions or would like a walkthrough of the architecture or specific parts of the code, feel free to reach out.
