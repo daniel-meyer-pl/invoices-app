@@ -32,9 +32,6 @@
                 <button type="button" @click="goToCustomers" class="text-sm underline">Manage customers</button>
               </div>
             </div>
-            <div class="text-xs text-gray-500 mt-1">
-              <a href="/customers" class="underline">Manage customers</a>
-            </div>
           </div>
 
           <div>

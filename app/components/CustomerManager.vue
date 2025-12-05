@@ -98,7 +98,6 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 const creating = ref(false)
 
-// new reactive state for creating a customer
 const newCustomer = reactive({
   firstname: '',
   lastname: '',
