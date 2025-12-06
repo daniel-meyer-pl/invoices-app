@@ -1,7 +1,7 @@
 <template>
-  <div style="border: 1px solid green;">
-    <AppHeader />
+  <AppHeader />
+  <main class="max-w-7xl mx-auto w-full px-4 py-8">
     <slot />
-    <AppFooter />
-  </div>
+  </main>
+  <AppFooter />
 </template>

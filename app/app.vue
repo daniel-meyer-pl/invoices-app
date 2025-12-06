@@ -1,10 +1,7 @@
 <template>
-  <div style="border: 1px solid red;">
-    app
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 <script setup lang="ts">
 useSeoMeta({

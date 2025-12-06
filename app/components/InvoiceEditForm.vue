@@ -96,6 +96,9 @@
           <button :disabled="submitting" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50">
             Save
           </button>
+          <button @click.prevent="downloadPdf" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition">
+            Print PDF
+          </button>
           <button type="button" @click="onCancel" class="text-sm text-gray-600">Cancel</button>
         </div>
       </form>
@@ -205,6 +208,10 @@ function removeItem(index: number) {
 
 function onCancel() {
   emit('cancel')
+}
+
+const downloadPdf = () => {
+  window.open(`/api/invoices/${props.invoiceId}/pdf`, '_blank')
 }
 
 async function onSubmit() {

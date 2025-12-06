@@ -1,6 +1,6 @@
-import { getCurrentUser } from '../../repositories/userRepository'
-import { findInvoiceById } from '../../repositories/invoiceRepository'
-import type { InvoiceApiResponse } from '../../../types/invoice'
+import { getCurrentUser } from '../../../repositories/userRepository'
+import { findInvoiceById } from '../../../repositories/invoiceRepository'
+import type { InvoiceApiResponse } from '../../../../types/invoice'
 
 export default defineEventHandler(async (event): Promise<InvoiceApiResponse> => {
   const currentUser = await getCurrentUser(event)

@@ -1,5 +1,5 @@
-import { getCurrentUser } from '../../repositories/userRepository'
-import { findInvoiceById, deleteInvoiceById } from '../../repositories/invoiceRepository'
+import { getCurrentUser } from '../../../repositories/userRepository'
+import { findInvoiceById, deleteInvoiceById } from '../../../repositories/invoiceRepository'
 
 export default defineEventHandler(async (event) => {
   const currentUser = await getCurrentUser(event)

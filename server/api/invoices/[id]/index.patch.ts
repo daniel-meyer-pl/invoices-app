@@ -1,8 +1,8 @@
-import { getCurrentUser } from '../../repositories/userRepository'
-import { findInvoiceById, updateInvoiceById } from '../../repositories/invoiceRepository'
-import { stripTags } from '../../utils/sanitize'
-import { findCustomerById } from '../../repositories/customerRepository'
-import type { InvoiceApiResponse, PatchInvoiceData } from '../../../types/invoice'
+import { getCurrentUser } from '../../../repositories/userRepository'
+import { findInvoiceById, updateInvoiceById } from '../../../repositories/invoiceRepository'
+import { stripTags } from '../../../utils/sanitize'
+import { findCustomerById } from '../../../repositories/customerRepository'
+import type { InvoiceApiResponse, PatchInvoiceData } from '../../../../types/invoice'
 
 export default defineEventHandler(async (event): Promise<InvoiceApiResponse> => {
   const currentUser = await getCurrentUser(event)
