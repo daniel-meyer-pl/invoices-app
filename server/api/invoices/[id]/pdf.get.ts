@@ -30,9 +30,9 @@ export default defineEventHandler(async (event) => {
 
   page.drawText(`Faktura ${invoice.invoiceNumber}`, { x: 40, y, size: 20, font: fontBold })
   y -= 30
-  page.drawText(`Data wystawienia: ${formatDate(invoice.createdAt)}`, { x: 40, y, size: 12, font })
+  page.drawText(`Data wystawienia: ${formatDate(invoice.createdAt as Date)}`, { x: 40, y, size: 12, font })
   y -= 20
-  page.drawText(`Termin platnosci: ${formatDate(invoice.paymentDeadline)}`, { x: 40, y, size: 12, font })
+  page.drawText(`Termin platnosci: ${formatDate(invoice.paymentDeadline as Date)}`, { x: 40, y, size: 12, font })
   y -= 30
 
   page.drawText('Sprzedawca:', { x: 40, y, size: 14, font: fontBold })

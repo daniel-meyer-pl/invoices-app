@@ -6,7 +6,7 @@ export type Customer = {
   companyName?: string | null
   address?: string | null
   nip?: string | null
-  createdAt: string
+  createdAt: string |Date
 }
 
 export type InvoiceItem = {
@@ -15,8 +15,8 @@ export type InvoiceItem = {
   productName: string
   amount: string
   unit: string
-  priceNetto: string
-  priceGross: string
+  priceNetto: number
+  priceGross: number
   tax: number
 }
 
@@ -26,13 +26,13 @@ export type Invoice = {
   customerId: string
   invoiceNumber: string
   paidStatus: boolean
-  paidDate?: string | null
-  priceNetto: string
-  priceGross: string
+  paidDate?: string | Date | null
+  priceNetto: number
+  priceGross: number
   currencyCode: string
-  paymentDeadline: string
+  paymentDeadline: string | Date
   paymentType: string
-  createdAt: string
+  createdAt: string | Date
   customer: Customer
   items: InvoiceItem[]
 }
@@ -46,7 +46,7 @@ export type CreateInvoiceData = {
   paymentDeadline: string
   paymentType?: string
   paidStatus?: boolean
-  paidDate?: string | null
+  paidDate?: Date | string | null
   items?: InvoiceItemData[]
 }
 

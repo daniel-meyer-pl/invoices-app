@@ -77,7 +77,7 @@ async function loadInvoices() {
 function formatDate(value?: string | null) {
   if (!value) return '—'
   try {
-    return new Date(value).toLocaleString()
+    return new Date(value).toISOString().split('T')[0]
   } catch {
     return value
   }
